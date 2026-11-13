@@ -87,7 +87,7 @@ import type {
   EvaluationCriterionSearchCriteria
 } from '@/apis/rubric/types'
 import type { FormInstance } from 'element-plus'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage } from 'element-plus'
 
 const searchCriteria = ref<EvaluationCriterionSearchCriteria>({
   criterion: ''

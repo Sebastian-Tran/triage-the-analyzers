@@ -61,9 +61,11 @@
         />
       </el-tab-pane>
       <el-tab-pane label="Categories" name="categories">
+        <!-- @vue-expect-error False positive: barChartOptions.plugins.legend.position is 'top', a valid position; the unannotated options object widens it to string -->
         <Bar :data="categoryData" :options="barChartOptions" height="500" width="1600" />
       </el-tab-pane>
       <el-tab-pane label="Statuses" name="statuses">
+        <!-- @vue-expect-error False positive: doughnutChartOptions.plugins.legend.position is 'top', a valid position; the unannotated options object widens it to string -->
         <Doughnut :data="statusData" :options="doughnutChartOptions" height="500" />
       </el-tab-pane>
     </el-tabs>

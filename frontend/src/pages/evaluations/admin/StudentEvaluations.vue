@@ -68,6 +68,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="Visualization" name="visualization ">
+        <!-- @vue-expect-error Not worth it: labels/data are undefined only until the fetch resolves, and Chart.js replaces undefined with [] (chart.js initData and DatasetController._dataCheck) -->
         <Line :data="evaluationData" :options="lineChartOptions" height="600" width="1500" />
       </el-tab-pane>
     </el-tabs>

@@ -7,4 +7,71 @@
 
      Unlike the baseline, this file may grow, but every entry is a reviewed decision. -->
 <FindBugsFilter>
+  <!-- D1, narrowed: EI_EXPOSE_REP and EI_EXPOSE_REP2 are not enforced on JPA entities or Spring beans.
+       Entities: Hibernate tracks changes through the collection object the entity holds, and Project Pulse
+       maintains associations by mutating those collections through getters (Course.addInstructor:
+       instructor.getCourses().add(this), and 9 more such sites), so returning or storing copies would silently
+       stop relationships from being persisted. Beans: the flagged fields are Spring singletons injected through
+       the constructor; sharing them is how dependency injection works.
+       Records, DTOs, and other plain classes are NOT covered by this reason and stay enforced (baselined
+       findings there remain untriaged). Listed explicitly because a SpotBugs filter cannot match @Entity. -->
+  <Match>
+    <Or>
+      <Class name="team.projectpulse.activity.Activity"/>
+      <Class name="team.projectpulse.course.Course"/>
+      <Class name="team.projectpulse.evaluation.PeerEvaluation"/>
+      <Class name="team.projectpulse.evaluation.Rating"/>
+      <Class name="team.projectpulse.instructor.Instructor"/>
+      <Class name="team.projectpulse.ram.collaboration.Comment"/>
+      <Class name="team.projectpulse.ram.collaboration.CommentThread"/>
+      <Class name="team.projectpulse.ram.document.DocumentSection"/>
+      <Class name="team.projectpulse.ram.document.DocumentSectionLock"/>
+      <Class name="team.projectpulse.ram.document.RequirementDocument"/>
+      <Class name="team.projectpulse.ram.requirement.ArtifactKeySequence"/>
+      <Class name="team.projectpulse.ram.requirement.ArtifactLink"/>
+      <Class name="team.projectpulse.ram.requirement.RequirementArtifact"/>
+      <Class name="team.projectpulse.ram.usecase.UseCase"/>
+      <Class name="team.projectpulse.ram.usecase.UseCaseExtension"/>
+      <Class name="team.projectpulse.ram.usecase.UseCaseExtensionStep"/>
+      <Class name="team.projectpulse.ram.usecase.UseCaseLock"/>
+      <Class name="team.projectpulse.ram.usecase.UseCaseMainStep"/>
+      <Class name="team.projectpulse.rubric.Criterion"/>
+      <Class name="team.projectpulse.rubric.Rubric"/>
+      <Class name="team.projectpulse.section.Section"/>
+      <Class name="team.projectpulse.student.Student"/>
+      <Class name="team.projectpulse.team.Team"/>
+    </Or>
+    <Or><Bug pattern="EI_EXPOSE_REP"/><Bug pattern="EI_EXPOSE_REP2"/></Or>
+  </Match>
+  <Match>
+    <Or>
+      <Class name="team.projectpulse.activity.ActivityController"/>
+      <Class name="team.projectpulse.course.CourseController"/>
+      <Class name="team.projectpulse.evaluation.EvaluationController"/>
+      <Class name="team.projectpulse.instructor.InstructorController"/>
+      <Class name="team.projectpulse.instructor.InstructorService"/>
+      <Class name="team.projectpulse.notification.ReminderController"/>
+      <Class name="team.projectpulse.notification.SubmissionStatusService"/>
+      <Class name="team.projectpulse.notification.WeeklyReminderScheduler"/>
+      <Class name="team.projectpulse.ram.collaboration.CommentController"/>
+      <Class name="team.projectpulse.ram.document.DocumentSectionService"/>
+      <Class name="team.projectpulse.ram.glossary.GlossaryService"/>
+      <Class name="team.projectpulse.ram.requirement.ArtifactLinkController"/>
+      <Class name="team.projectpulse.ram.requirement.RequirementArtifactController"/>
+      <Class name="team.projectpulse.ram.usecase.UseCaseService"/>
+      <Class name="team.projectpulse.rubric.CriterionController"/>
+      <Class name="team.projectpulse.rubric.RubricController"/>
+      <Class name="team.projectpulse.section.SectionController"/>
+      <Class name="team.projectpulse.section.SectionService"/>
+      <Class name="team.projectpulse.seed.DataInitializer"/>
+      <Class name="team.projectpulse.student.StudentController"/>
+      <Class name="team.projectpulse.student.StudentService"/>
+      <Class name="team.projectpulse.team.TeamController"/>
+      <Class name="team.projectpulse.user.resetpassword.ResetPasswordService"/>
+      <Class name="team.projectpulse.user.UserController"/>
+      <Class name="team.projectpulse.user.UserService"/>
+    </Or>
+    <Bug pattern="EI_EXPOSE_REP2"/>
+    <Method name="&lt;init&gt;"/>
+  </Match>
 </FindBugsFilter>
