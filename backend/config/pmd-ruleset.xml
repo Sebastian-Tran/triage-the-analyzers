@@ -13,9 +13,10 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
     <description>PMD quickstart, with Project Pulse's decisions.</description>
     <rule ref="rulesets/java/quickstart.xml">
-        <!-- Re-added below with project configuration (D2). -->
+        <!-- Re-added below with project configuration (D2, D4). -->
         <exclude name="UncommentedEmptyConstructor"/>
         <exclude name="UnnecessaryConstructor"/>
+        <exclude name="GuardLogStatement"/>
     </rule>
 
     <!-- D2, narrowed: empty-constructor rules are not enforced on JPA entities. JPA requires every @Entity to
@@ -37,4 +38,14 @@
         </properties>
     </rule>
 
+    <!-- D4, narrowed: guards are required only on trace and debug calls. No application*.yml sets
+         logging.level, so every profile runs at Spring Boot's default INFO: info, warn, and error calls always
+         execute and a guard can never skip them. Debug and trace are off by default, so a guard there skips
+         argument evaluation that would otherwise be wasted. -->
+    <rule ref="category/java/bestpractices.xml/GuardLogStatement">
+        <properties>
+            <property name="logLevels" value="trace,debug"/>
+            <property name="guardsMethods" value="isTraceEnabled,isDebugEnabled"/>
+        </properties>
+    </rule>
 </ruleset>
